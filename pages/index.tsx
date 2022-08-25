@@ -39,7 +39,6 @@ export default function Home() {
 
   function handleKeyPress(event: KeyboardEvent): void {
     if (text && text.lastText) {
-      console.log(event.key);
       if (event.key !== 'Shift') {
         if (event.key === text.lastText[0]) {
           setText({
@@ -73,15 +72,16 @@ export default function Home() {
             )}
             {text ? text.lastText.slice(1) : <>There is no data (yet)</>}
           </div>
-          <input
-            type="button"
-            value="End game"
-            onClick={() => {
-              setGameOn(false);
-            }}
-          />
           {text?.lastText ? (
-            <></>
+            <>
+              <input
+                type="button"
+                value="End game"
+                onClick={() => {
+                  setGameOn(false);
+                }}
+              />
+            </>
           ) : text ? (
             <div className="results">
               <h3>Your score:</h3>
