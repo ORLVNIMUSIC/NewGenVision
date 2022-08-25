@@ -31,21 +31,22 @@ export default function Home() {
   }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [text]);
 
   function handleKeyPress(event: KeyboardEvent): void {
-    console.log(text);
-
-    if (text) {
+    if (text && text.lastText) {
       console.log(event.key);
       if (event.key !== 'Shift') {
-        if (event.key === text.lastText[0])
+        if (event.key === text.lastText[0]) {
           setText({
             lastText: text.lastText.slice(1),
             doneText: text.doneText.concat(event.key),
           });
-        else {
+        } else {
           setErrors((prev) => prev + 1);
           refText.current!.classList.toggle('shakingComponent');
           const shakeTimer: NodeJS.Timeout = setTimeout(() => {
@@ -54,15 +55,10 @@ export default function Home() {
           }, 500);
         }
       }
+    } else {
+      document.removeEventListener('keydown', handleKeyPress);
     }
   }
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyPress);
-    return () => {
-      document.removeEventListener('keydown', handleKeyPress);
-    };
-  }, [text]);
 
   return (
     <div className="container">
@@ -91,7 +87,7 @@ export default function Home() {
                 type="button"
                 value="Start again!"
                 onClick={() => {
-                  setGameOn(!gameOn);
+                  setGameOn(false);
                 }}
               />
             </div>
@@ -120,7 +116,7 @@ export default function Home() {
             onClick={() => {
               fetchData();
               setErrors(0);
-              setGameOn(!gameOn);
+              setGameOn(true);
             }}
           />
         </div>
