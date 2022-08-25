@@ -14,16 +14,24 @@ export default function Home() {
     setData();
   }, []);
 
+  function handleKeyPress(event: KeyboardEvent) {
+    console.log(event.key);
+    if (event.key !== 'Shift') {
+      console.log('check');
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  });
+
   return (
     <>
       <div className="textData">
         {text ? text : <>There is no data (yet)</>}
-      </div>
-
-      <div className="userData">
-        <label>
-          <input type="text" />
-        </label>
       </div>
     </>
   );
