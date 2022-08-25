@@ -12,3 +12,7 @@ body {
   margin-top: 10vw;
   width: 50vw;
 }
+
+.lastTextFirstLetter {
+  background-color: rgb(245, 56, 56);
+}

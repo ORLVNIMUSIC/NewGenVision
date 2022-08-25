@@ -13,7 +13,11 @@ export default function Home() {
     ).json();
 
     setText({
-      lastText: data[Math.floor(Math.random() * data.length)],
+      lastText: `deete
+      seases 
+      se  sae` //data[Math.floor(Math.random() * data.length)]
+        .replace(/\r?\n?\s+/g, ' ')
+        .trim(),
       doneText: '',
     });
   }
@@ -46,8 +50,14 @@ export default function Home() {
   return (
     <>
       <div className="textData">
-        {text ? text.doneText : <>There is no data (yet)</>}
-        {text ? text.lastText : <>There is no data (yet)</>}
+        <b className="doneText">{text ? text.doneText : <></>}</b>
+        {text ? (
+          <b className="lastTextFirstLetter">{text.lastText[0]}</b>
+        ) : (
+          <></>
+        )}
+        {text ? text.lastText.slice(1) : <>There is no data (yet)</>}
+        {text?.lastText ? <></> : <div className="results">Your score:</div>}
       </div>
     </>
   );
