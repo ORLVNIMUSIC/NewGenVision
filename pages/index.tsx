@@ -7,6 +7,7 @@ interface IText {
 
 export default function Home() {
   const [text, setText] = useState<IText>();
+  const [errors, setErrors] = useState<number>(0);
   async function setData(): Promise<void> {
     const data = await (
       await fetch(`https://baconipsum.com/api/?type=meat-and-filler`)
@@ -31,11 +32,15 @@ export default function Home() {
 
     if (text) {
       console.log(event.key);
-      if (event.key !== 'Shift' && event.key === text.lastText[0]) {
-        setText({
-          lastText: text.lastText.slice(1),
-          doneText: text.doneText.concat(event.key),
-        });
+      if (event.key !== 'Shift') {
+        if (event.key === text.lastText[0])
+          setText({
+            lastText: text.lastText.slice(1),
+            doneText: text.doneText.concat(event.key),
+          });
+        else {
+          setErrors((prev) => prev + 1);
+        }
       }
     }
   }
@@ -48,7 +53,7 @@ export default function Home() {
   }, [text]);
 
   return (
-    <>
+    <div className="container">
       <div className="textData">
         <b className="doneText">{text ? text.doneText : <></>}</b>
         {text ? (
@@ -57,8 +62,20 @@ export default function Home() {
           <></>
         )}
         {text ? text.lastText.slice(1) : <>There is no data (yet)</>}
-        {text?.lastText ? <></> : <div className="results">Your score:</div>}
       </div>
-    </>
+      {text?.lastText ? (
+        <></>
+      ) : text ? (
+        <div className="results">
+          <h3>Your score:</h3>
+          <p>Errors: {errors}</p>
+          <p>
+            Accuracy: {((1 - errors / text.doneText.length) * 100).toFixed(2)} %
+          </p>
+        </div>
+      ) : (
+        <></>
+      )}
+    </div>
   );
 }
