@@ -73,6 +73,13 @@ export default function Home() {
             )}
             {text ? text.lastText.slice(1) : <>There is no data (yet)</>}
           </div>
+          <input
+            type="button"
+            value="End game"
+            onClick={() => {
+              setGameOn(false);
+            }}
+          />
           {text?.lastText ? (
             <></>
           ) : text ? (
