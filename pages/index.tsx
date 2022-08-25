@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [text, setTest] = useState([]);
+  const [text, setTest] = useState('');
   async function setData(): Promise<void> {
-    setTest(
-      await (
-        await fetch(`https://baconipsum.com/api/?type=meat-and-filler`)
-      ).json()
-    );
+    const data = await (
+      await fetch(`https://baconipsum.com/api/?type=meat-and-filler`)
+    ).json();
+
+    setTest(data[Math.floor(Math.random() * data.length)]);
   }
+
   useEffect(() => {
     setData();
   }, []);
@@ -16,11 +17,13 @@ export default function Home() {
   return (
     <>
       <div className="textData">
-        {text ? (
-          text[Math.floor(Math.random() * text.length)]
-        ) : (
-          <>There is no data (yet)</>
-        )}
+        {text ? text : <>There is no data (yet)</>}
+      </div>
+
+      <div className="userData">
+        <label>
+          <input type="text" />
+        </label>
       </div>
     </>
   );
