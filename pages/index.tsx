@@ -21,6 +21,7 @@ export default function Home() {
   const [timer, setTimer] = useState<ITimer>();
 
   const refText = useRef<HTMLDivElement>(null);
+  const startButton = useRef<HTMLInputElement>(null);
 
   async function fetchData(): Promise<void> {
     const data = await (
@@ -80,8 +81,8 @@ export default function Home() {
     <div className="container">
       {gameOn ? (
         <>
-          <div className="game" ref={refText}>
-            <div className="textData">
+          <div className="game">
+            <div className="textData" ref={refText}>
               <span className="doneText">{text ? text.doneText : <></>}</span>
               {text ? (
                 <span className="lastTextFirstLetter">{text.lastText[0]}</span>
@@ -96,6 +97,7 @@ export default function Home() {
                   type="button"
                   value="End game"
                   onClick={() => {
+                    document.removeEventListener('keydown', handleKeyPress);
                     setGameOn(false);
                   }}
                 />
@@ -125,7 +127,12 @@ export default function Home() {
           </div>
         </>
       ) : (
-        <div className="settings">
+        <div
+          className="settings"
+          onClick={() => {
+            startButton.current?.focus();
+          }}
+        >
           <label>
             Choose quantity of symbols:
             <p>{charNumber}</p>
@@ -136,6 +143,7 @@ export default function Home() {
               defaultValue={minCharNumber}
               step={1}
               onChange={(event) => {
+                startButton.current?.focus();
                 setCharNumber(Number(event.currentTarget.value));
               }}
             />
@@ -143,6 +151,7 @@ export default function Home() {
           <input
             type="button"
             value="Start game!"
+            ref={startButton}
             onClick={() => {
               fetchData();
               setErrors(0);

@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: rgb(206, 206, 206);
 }
 
 .container {
@@ -28,7 +29,7 @@ body {
 
 .settings,
 .game {
-  background-color: rgb(115, 89, 209);
+  background-color: rgb(66, 201, 111);
   font-size: 24px;
   text-align: center;
   width: 70vw;
@@ -49,7 +50,7 @@ h3 {
 }
 
 input {
-  background-color: rgb(235, 44, 187);
+  background-color: rgb(255, 255, 255);
   border-radius: 7px;
   width: 200px;
   height: 50px;
@@ -58,7 +59,7 @@ input {
 }
 
 input:hover {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(66, 201, 111);
 }
 
 .settings {
@@ -71,7 +72,7 @@ input:hover {
 }
 
 .textData {
-  background-color: rgb(218, 42, 42);
+  background-color: rgb(255, 255, 255);
   padding: 10px;
 }
 
