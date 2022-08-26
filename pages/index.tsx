@@ -5,6 +5,11 @@ interface IText {
   doneText: string;
 }
 
+interface ITimer {
+  startTimer: number | undefined;
+  endTimer: number | undefined;
+}
+
 export default function Home() {
   const minCharNumber: number = 100;
   const maxCharNumber: number = 300;
@@ -13,6 +18,7 @@ export default function Home() {
   const [errors, setErrors] = useState<number>(0);
   const [charNumber, setCharNumber] = useState<number>(minCharNumber);
   const [gameOn, setGameOn] = useState<boolean>(false);
+  const [timer, setTimer] = useState<ITimer>();
 
   const refText = useRef<HTMLDivElement>(null);
 
@@ -22,7 +28,8 @@ export default function Home() {
     ).json();
 
     setText({
-      lastText: data[Math.floor(Math.random() * data.length)]
+      lastText: `la la la`
+        // data[Math.floor(Math.random() * data.length)]
         .replace(/\r?\n?\s+/g, ' ')
         .trim()
         .substr(0, charNumber),
@@ -41,6 +48,19 @@ export default function Home() {
     if (text && text.lastText) {
       if (event.key !== 'Shift') {
         if (event.key === text.lastText[0]) {
+          if (text.lastText.length == 1) {
+            setTimer({
+              startTimer: timer?.startTimer,
+              endTimer: Date.now(),
+            });
+            document.removeEventListener('keydown', handleKeyPress);
+          }
+          if (text.doneText.length == 0) {
+            setTimer({
+              startTimer: Date.now(),
+              endTimer: undefined,
+            });
+          }
           setText({
             lastText: text.lastText.slice(1),
             doneText: text.doneText.concat(event.key),
@@ -54,8 +74,6 @@ export default function Home() {
           }, 500);
         }
       }
-    } else {
-      document.removeEventListener('keydown', handleKeyPress);
     }
   }
 
@@ -89,6 +107,9 @@ export default function Home() {
               <p>
                 Accuracy:{' '}
                 {((1 - errors / text.doneText.length) * 100).toFixed(2)} %
+              </p>
+              <p>
+                Time: {(timer?.endTimer! - timer?.startTimer!) / 1000} seconds
               </p>
               <input
                 type="button"
