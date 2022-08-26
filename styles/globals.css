@@ -127,8 +127,8 @@ input:hover {
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #fff;
-  border-color: #fff transparent #fff transparent;
+  border: 6px solid rgb(206, 206, 206);
+  border-color: rgb(206, 206, 206) transparent rgb(206, 206, 206) transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 @keyframes lds-dual-ring {
@@ -138,4 +138,8 @@ input:hover {
   100% {
     transform: rotate(360deg);
   }
+}
+
+input[type='range'] {
+  accent-color: rgb(0, 0, 0);
 }
