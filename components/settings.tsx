@@ -1,5 +1,7 @@
+import Image from 'next/image';
 import { FC, SetStateAction, useRef, useState } from 'react';
 import { IConstsCharNumber } from '../pages';
+import questionMark from '../public/question-mark.svg';
 
 const Settings: FC<{
   setGameOn: React.Dispatch<SetStateAction<boolean>>;
@@ -14,6 +16,12 @@ const Settings: FC<{
 
   return (
     <div className="settings">
+      <Image
+        src={questionMark}
+        width={30}
+        height={30}
+        title="You may choose number of characters you will enter (100-300). The timer starts when you press first key correctly. Good luck!"
+      />
       <label>
         Choose quantity of symbols:
         <p>
