@@ -80,52 +80,55 @@ export default function Home() {
     <div className="container">
       {gameOn ? (
         <>
-          <div className="textData" ref={refText}>
-            <b className="doneText">{text ? text.doneText : <></>}</b>
-            {text ? (
-              <b className="lastTextFirstLetter">{text.lastText[0]}</b>
+          <div className="game" ref={refText}>
+            <div className="textData">
+              <span className="doneText">{text ? text.doneText : <></>}</span>
+              {text ? (
+                <span className="lastTextFirstLetter">{text.lastText[0]}</span>
+              ) : (
+                <></>
+              )}
+              {text ? text.lastText.slice(1) : <>There is no data (yet)</>}
+            </div>
+            {text?.lastText ? (
+              <>
+                <input
+                  type="button"
+                  value="End game"
+                  onClick={() => {
+                    setGameOn(false);
+                  }}
+                />
+              </>
+            ) : text ? (
+              <div className="results">
+                <h3>Your score:</h3>
+                <p>Errors: {errors}</p>
+                <p>
+                  Accuracy:{' '}
+                  {((1 - errors / text.doneText.length) * 100).toFixed(2)} %
+                </p>
+                <p>
+                  Time: {(timer?.endTimer! - timer?.startTimer!) / 1000} seconds
+                </p>
+                <input
+                  type="button"
+                  value="Start again!"
+                  onClick={() => {
+                    setGameOn(false);
+                  }}
+                />
+              </div>
             ) : (
               <></>
             )}
-            {text ? text.lastText.slice(1) : <>There is no data (yet)</>}
           </div>
-          {text?.lastText ? (
-            <>
-              <input
-                type="button"
-                value="End game"
-                onClick={() => {
-                  setGameOn(false);
-                }}
-              />
-            </>
-          ) : text ? (
-            <div className="results">
-              <h3>Your score:</h3>
-              <p>Errors: {errors}</p>
-              <p>
-                Accuracy:{' '}
-                {((1 - errors / text.doneText.length) * 100).toFixed(2)} %
-              </p>
-              <p>
-                Time: {(timer?.endTimer! - timer?.startTimer!) / 1000} seconds
-              </p>
-              <input
-                type="button"
-                value="Start again!"
-                onClick={() => {
-                  setGameOn(false);
-                }}
-              />
-            </div>
-          ) : (
-            <></>
-          )}
         </>
       ) : (
         <div className="settings">
           <label>
-            Choose quantity of symbols: {charNumber}
+            Choose quantity of symbols:
+            <p>{charNumber}</p>
             <input
               type="range"
               min={minCharNumber}
