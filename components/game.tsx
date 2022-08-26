@@ -111,6 +111,14 @@ const Game: FC<{
             Accuracy: {((1 - errors / text.doneText.length) * 100).toFixed(2)} %
           </p>
           <p>Time: {(timer?.endTimer! - timer?.startTimer!) / 1000} seconds</p>
+          <p>
+            Speed:{' '}
+            {(
+              charNumber /
+              ((timer?.endTimer! - timer?.startTimer!) / 1000)
+            ).toFixed(2)}{' '}
+            characters per second
+          </p>
           <input
             type="button"
             value="Start again!"
