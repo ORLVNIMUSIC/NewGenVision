@@ -4,7 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: rgb(206, 206, 206);
+  background-color: rgb(255, 255, 255);
 }
 
 .container {
@@ -27,9 +27,17 @@ body {
   border-radius: 20px;
 }
 
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'] {
+  text-align: center;
+}
+
 .settings,
 .game {
-  background-color: rgb(66, 201, 111);
+  background-color: rgb(206, 206, 206);
   font-size: 24px;
   text-align: center;
   width: 70vw;
@@ -59,11 +67,10 @@ input {
 }
 
 input:hover {
-  background-color: rgb(66, 201, 111);
+  background-color: rgb(206, 206, 206);
 }
 
 .settings {
-  background-color: rgb(39, 189, 84);
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -74,6 +81,7 @@ input:hover {
 .textData {
   background-color: rgb(255, 255, 255);
   padding: 10px;
+  margin: 10px;
 }
 
 .lastTextFirstLetter {
@@ -104,5 +112,30 @@ input:hover {
   40%,
   60% {
     transform: translate3d(0, 4px, 0);
+  }
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: ' ';
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

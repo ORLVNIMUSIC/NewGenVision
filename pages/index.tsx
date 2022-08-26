@@ -29,7 +29,8 @@ export default function Home() {
     ).json();
 
     setText({
-      lastText: data[Math.floor(Math.random() * data.length)]
+      lastText: data
+        .join(' ')
         .replace(/\r?\n?\s+/g, ' ')
         .trim()
         .substr(0, charNumber),
@@ -82,65 +83,94 @@ export default function Home() {
       {gameOn ? (
         <>
           <div className="game">
-            <div className="textData" ref={refText}>
-              <span className="doneText">{text ? text.doneText : <></>}</span>
-              {text ? (
-                <span className="lastTextFirstLetter">{text.lastText[0]}</span>
-              ) : (
-                <></>
-              )}
-              {text ? text.lastText.slice(1) : <>There is no data (yet)</>}
-            </div>
-            {text?.lastText ? (
+            {text ? (
               <>
-                <input
-                  type="button"
-                  value="End game"
-                  onClick={() => {
-                    document.removeEventListener('keydown', handleKeyPress);
-                    setGameOn(false);
-                  }}
-                />
+                <div className="textData" ref={refText}>
+                  <span className="doneText">
+                    {text ? text.doneText : <></>}
+                  </span>
+                  {text ? (
+                    <span className="lastTextFirstLetter">
+                      {text.lastText[0]}
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                  {text ? text.lastText.slice(1) : <></>}
+                </div>
+                {text?.lastText ? (
+                  <>
+                    <input
+                      type="button"
+                      value="End game"
+                      onClick={() => {
+                        document.removeEventListener('keydown', handleKeyPress);
+                        setText(undefined);
+                        setGameOn(false);
+                      }}
+                    />
+                  </>
+                ) : text ? (
+                  <div className="results">
+                    <h3>Your score:</h3>
+                    <p>Errors: {errors}</p>
+                    <p>
+                      Accuracy:{' '}
+                      {((1 - errors / text.doneText.length) * 100).toFixed(2)} %
+                    </p>
+                    <p>
+                      Time: {(timer?.endTimer! - timer?.startTimer!) / 1000}{' '}
+                      seconds
+                    </p>
+                    <input
+                      type="button"
+                      value="Start again!"
+                      onClick={() => {
+                        setText(undefined);
+                        setGameOn(false);
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
               </>
-            ) : text ? (
-              <div className="results">
-                <h3>Your score:</h3>
-                <p>Errors: {errors}</p>
-                <p>
-                  Accuracy:{' '}
-                  {((1 - errors / text.doneText.length) * 100).toFixed(2)} %
-                </p>
-                <p>
-                  Time: {(timer?.endTimer! - timer?.startTimer!) / 1000} seconds
-                </p>
-                <input
-                  type="button"
-                  value="Start again!"
-                  onClick={() => {
-                    setGameOn(false);
-                  }}
-                />
-              </div>
             ) : (
-              <></>
+              <div className="lds-dual-ring" />
             )}
           </div>
         </>
       ) : (
-        <div
-          className="settings"
-          onClick={() => {
-            startButton.current?.focus();
-          }}
-        >
+        <div className="settings" onClick={() => {}}>
           <label>
             Choose quantity of symbols:
-            <p>{charNumber}</p>
+            <p>
+              <input
+                type="number"
+                value={charNumber}
+                onBlur={(event) => {
+                  if (Number(event.currentTarget.value) > maxCharNumber) {
+                    event.currentTarget.value = maxCharNumber.toString();
+                  }
+                  if (Number(event.currentTarget.value) < minCharNumber) {
+                    event.currentTarget.value = minCharNumber.toString();
+                  }
+                  setCharNumber(Number(event.currentTarget.value));
+                  startButton.current?.focus();
+                }}
+                onChange={(event) => {
+                  setCharNumber(Number(event.currentTarget.value));
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') event.currentTarget.blur();
+                }}
+              />
+            </p>
             <input
               type="range"
               min={minCharNumber}
               max={maxCharNumber}
-              defaultValue={minCharNumber}
+              value={charNumber}
               step={1}
               onChange={(event) => {
                 startButton.current?.focus();
