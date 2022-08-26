@@ -21,6 +21,7 @@ const Settings: FC<{
         width={30}
         height={30}
         title="You may choose number of characters you will enter (100-300). The timer starts when you press first key correctly. Good luck!"
+        alt="Question mark"
       />
       <label>
         Choose quantity of symbols:
