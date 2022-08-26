@@ -28,8 +28,7 @@ export default function Home() {
     ).json();
 
     setText({
-      lastText: `la la la`
-        // data[Math.floor(Math.random() * data.length)]
+      lastText: data[Math.floor(Math.random() * data.length)]
         .replace(/\r?\n?\s+/g, ' ')
         .trim()
         .substr(0, charNumber),
