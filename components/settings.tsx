@@ -17,6 +17,7 @@ const Settings: FC<{
   return (
     <div className="settings">
       <Image
+        className="questionMark"
         src={questionMark}
         width={30}
         height={30}
