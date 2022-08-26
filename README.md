@@ -2,7 +2,7 @@
 
 **TypeFighter** is a game for testing you ability of typing on keyboard
 
-## Instalation
+## Installation
 
 Clone the repository on you local machine. After that enter you terminal from directory of your repository and install all necessary dependencies via your package manager (using NPM for the example):
 
