@@ -25,15 +25,18 @@ const Game: FC<{
     const data = await (
       await fetch(`https://baconipsum.com/api/?type=meat-and-filler`)
     ).json();
-
-    setText({
-      lastText: data
-        .join(' ')
-        .replace(/\r?\n?\s+/g, ' ')
-        .trim()
-        .substr(0, charNumber),
-      doneText: '',
-    });
+    if (data) {
+      setText({
+        lastText: data
+          .join(' ')
+          .replace(/\r?\n?\s+/g, ' ')
+          .trim()
+          .substr(0, charNumber),
+        doneText: '',
+      });
+    } else {
+      alert('Something went wrong on server side. Please try again.');
+    }
   }
   useEffect(() => {
     fetchData();
